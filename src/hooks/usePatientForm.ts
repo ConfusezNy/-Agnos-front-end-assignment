@@ -24,6 +24,7 @@ interface UsePatientFormReturn {
   sessionId: string | null;
   progress: number;
   handleFieldChange: (field: keyof PatientFormData, value: string) => void;
+  handleFieldBlur: (field: keyof PatientFormData) => void;
   handleSubmit: () => { success: boolean; firstErrorField?: keyof PatientFormData };
 }
 
@@ -77,6 +78,34 @@ export function usePatientForm(): UsePatientFormReturn {
       sendRef.current({ type: 'patient:status', status: 'inactive' });
     }, 30000);
   }, []);
+
+  // Handle field blur — mark as touched + re-validate (catches spaces-only input)
+  const handleFieldBlur = useCallback(
+    (field: keyof PatientFormData) => {
+      if (isSubmitted) return;
+
+      setTouchedFields((prev) => {
+        if (prev.has(field)) return prev;
+        const next = new Set(prev);
+        next.add(field);
+        return next;
+      });
+
+      // Re-validate with current value (important for spaces-only case)
+      const currentValue = formDataRef.current[field];
+      const error = validateField(field, currentValue);
+      setErrors((prev) => {
+        const next = { ...prev };
+        if (error) {
+          next[field] = error;
+        } else {
+          delete next[field];
+        }
+        return next;
+      });
+    },
+    [isSubmitted]
+  );
 
   // Handle field change with debounced WebSocket sync
   const handleFieldChange = useCallback(
@@ -181,6 +210,7 @@ export function usePatientForm(): UsePatientFormReturn {
     sessionId,
     progress,
     handleFieldChange,
+    handleFieldBlur,
     handleSubmit,
   };
 }

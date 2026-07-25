@@ -14,6 +14,7 @@ export default function PatientForm() {
     connectionState,
     progress,
     handleFieldChange,
+    handleFieldBlur,
     handleSubmit,
   } = usePatientForm();
 
@@ -86,13 +87,13 @@ export default function PatientForm() {
                 Personal Information
               </legend>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <FormField name="firstName" label="First name" required placeholder="John" value={formData.firstName} error={errors.firstName} touched={touchedFields.has('firstName')} onChange={handleFieldChange} />
-                <FormField name="middleName" label="Middle name" placeholder="Michael" value={formData.middleName} error={errors.middleName} touched={touchedFields.has('middleName')} onChange={handleFieldChange} />
-                <FormField name="lastName" label="Last name" required placeholder="Doe" value={formData.lastName} error={errors.lastName} touched={touchedFields.has('lastName')} onChange={handleFieldChange} />
-                <FormField name="dateOfBirth" label="Date of birth" type="date" required value={formData.dateOfBirth} error={errors.dateOfBirth} touched={touchedFields.has('dateOfBirth')} onChange={handleFieldChange} />
+                <FormField name="firstName" label="First name" required placeholder="John" value={formData.firstName} error={errors.firstName} touched={touchedFields.has('firstName')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
+                <FormField name="middleName" label="Middle name" placeholder="Michael" value={formData.middleName} error={errors.middleName} touched={touchedFields.has('middleName')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
+                <FormField name="lastName" label="Last name" required placeholder="Doe" value={formData.lastName} error={errors.lastName} touched={touchedFields.has('lastName')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
+                <FormField name="dateOfBirth" label="Date of birth" type="date" required value={formData.dateOfBirth} error={errors.dateOfBirth} touched={touchedFields.has('dateOfBirth')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
                 <FormField
                   name="gender" label="Gender" type="select" required
-                  value={formData.gender} error={errors.gender} touched={touchedFields.has('gender')} onChange={handleFieldChange}
+                  value={formData.gender} error={errors.gender} touched={touchedFields.has('gender')} onChange={handleFieldChange} onBlur={handleFieldBlur}
                   options={[
                     { value: 'male', label: 'Male' },
                     { value: 'female', label: 'Female' },
@@ -110,10 +111,10 @@ export default function PatientForm() {
                 Contact Information
               </legend>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <FormField name="phoneNumber" label="Phone number" type="tel" required placeholder="0812345678" hint="e.g. 0812345678 or +66812345678" value={formData.phoneNumber} error={errors.phoneNumber} touched={touchedFields.has('phoneNumber')} onChange={handleFieldChange} />
-                <FormField name="email" label="Email" type="email" required placeholder="john@example.com" value={formData.email} error={errors.email} touched={touchedFields.has('email')} onChange={handleFieldChange} />
+                <FormField name="phoneNumber" label="Phone number" type="tel" required placeholder="0812345678" hint="e.g. 0812345678 or +66812345678" value={formData.phoneNumber} error={errors.phoneNumber} touched={touchedFields.has('phoneNumber')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
+                <FormField name="email" label="Email" type="email" required placeholder="john@example.com" value={formData.email} error={errors.email} touched={touchedFields.has('email')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
                 <div className="sm:col-span-2">
-                  <FormField name="address" label="Address" type="textarea" required placeholder="123 Main Street, City, Country" value={formData.address} error={errors.address} touched={touchedFields.has('address')} onChange={handleFieldChange} />
+                  <FormField name="address" label="Address" type="textarea" required placeholder="123 Main Street, City, Country" value={formData.address} error={errors.address} touched={touchedFields.has('address')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
                 </div>
               </div>
             </fieldset>
@@ -128,7 +129,7 @@ export default function PatientForm() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <FormField
                   name="preferredLanguage" label="Preferred language" type="select" required
-                  value={formData.preferredLanguage} error={errors.preferredLanguage} touched={touchedFields.has('preferredLanguage')} onChange={handleFieldChange}
+                  value={formData.preferredLanguage} error={errors.preferredLanguage} touched={touchedFields.has('preferredLanguage')} onChange={handleFieldChange} onBlur={handleFieldBlur}
                   options={[
                     { value: 'en', label: 'English' },
                     { value: 'th', label: 'Thai' },
@@ -145,7 +146,7 @@ export default function PatientForm() {
                 />
                 <FormField
                   name="nationality" label="Nationality" type="select" required
-                  value={formData.nationality} error={errors.nationality} touched={touchedFields.has('nationality')} onChange={handleFieldChange}
+                  value={formData.nationality} error={errors.nationality} touched={touchedFields.has('nationality')} onChange={handleFieldChange} onBlur={handleFieldBlur}
                   options={[
                     { value: 'Thai', label: 'Thai' },
                     { value: 'American', label: 'American' },
@@ -168,7 +169,7 @@ export default function PatientForm() {
                 />
                 <FormField
                   name="religion" label="Religion" type="select"
-                  value={formData.religion} error={errors.religion} touched={touchedFields.has('religion')} onChange={handleFieldChange}
+                  value={formData.religion} error={errors.religion} touched={touchedFields.has('religion')} onChange={handleFieldChange} onBlur={handleFieldBlur}
                   options={[
                     { value: 'Buddhism', label: 'Buddhism' },
                     { value: 'Christianity', label: 'Christianity' },
@@ -191,10 +192,10 @@ export default function PatientForm() {
                 Emergency Contact
               </legend>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <FormField name="emergencyContactName" label="Contact name" placeholder="Jane Doe" value={formData.emergencyContactName} error={errors.emergencyContactName} touched={touchedFields.has('emergencyContactName')} onChange={handleFieldChange} />
+                <FormField name="emergencyContactName" label="Contact name" placeholder="Jane Doe" value={formData.emergencyContactName} error={errors.emergencyContactName} touched={touchedFields.has('emergencyContactName')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
                 <FormField
                   name="emergencyContactRelationship" label="Relationship" type="select"
-                  value={formData.emergencyContactRelationship} error={errors.emergencyContactRelationship} touched={touchedFields.has('emergencyContactRelationship')} onChange={handleFieldChange}
+                  value={formData.emergencyContactRelationship} error={errors.emergencyContactRelationship} touched={touchedFields.has('emergencyContactRelationship')} onChange={handleFieldChange} onBlur={handleFieldBlur}
                   options={[
                     { value: 'spouse', label: 'Spouse' },
                     { value: 'parent', label: 'Parent' },

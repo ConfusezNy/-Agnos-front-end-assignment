@@ -15,6 +15,7 @@ interface FormFieldProps {
   touched?: boolean;
   options?: { value: string; label: string }[];
   onChange: (field: keyof PatientFormData, value: string) => void;
+  onBlur?: (field: keyof PatientFormData) => void;
   disabled?: boolean;
   maxLength?: number;
 }
@@ -43,6 +44,7 @@ export default memo(function FormField({
   touched = false,
   options,
   onChange,
+  onBlur,
   disabled = false,
   maxLength,
 }: FormFieldProps) {
@@ -83,6 +85,7 @@ export default memo(function FormField({
           name={name}
           value={value}
           onChange={(e) => onChange(name, e.target.value)}
+          onBlur={() => onBlur?.(name)}
           className={baseInputClasses}
           disabled={disabled}
           aria-invalid={showError ? 'true' : undefined}
@@ -101,6 +104,7 @@ export default memo(function FormField({
           name={name}
           value={value}
           onChange={(e) => onChange(name, e.target.value)}
+          onBlur={() => onBlur?.(name)}
           placeholder={placeholder}
           maxLength={limit}
           className={`${baseInputClasses} min-h-[72px] resize-y`}
@@ -115,6 +119,7 @@ export default memo(function FormField({
           type={type}
           value={value}
           onChange={(e) => onChange(name, e.target.value)}
+          onBlur={() => onBlur?.(name)}
           placeholder={placeholder}
           maxLength={limit}
           className={baseInputClasses}

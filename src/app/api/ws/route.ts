@@ -1,20 +1,16 @@
 // ============================================================
-// WebSocket Endpoint — Vercel Functions
-// This route only works on Vercel (production) or with `vercel dev`.
-// For local dev with `next dev`, the WS server in instrumentation.ts handles it.
+// WebSocket Endpoint — Vercel Functions (Production)
+// Uses @vercel/functions experimental_upgradeWebSocket.
+// For local dev with `next dev`, instrumentation.ts handles WS separately.
 // ============================================================
 
-import { connection } from 'next/server';
 import { experimental_upgradeWebSocket } from '@vercel/functions';
 import { WebSocketHub } from '@/lib/ws-handler';
 
-// Single hub instance per Vercel Function container
+// Single hub instance per Vercel Function container (Fluid Compute keeps it alive)
 const hub = new WebSocketHub();
 
 export async function GET() {
-  // Opt out of static prerendering (required for WebSocket routes)
-  await connection();
-
   const clientId = hub.generateSessionId();
 
   return experimental_upgradeWebSocket((ws) => {

@@ -6,12 +6,12 @@ A responsive, real-time patient information form and staff monitoring dashboard 
 
 ## 🔗 Links
 
-| | Link |
-|:---|:---|
-| **Live Application** | [https://agnos-frontend.vercel.app](https://agnos-frontend.vercel.app) |
-| **Code Repository** | [GitHub](https://github.com/YOUR_USERNAME/agnos-frontend) |
-| **Patient Form** | `/patient` |
-| **Staff Dashboard** | `/staff` |
+|                      | Link                                                                                           |
+| :------------------- | :--------------------------------------------------------------------------------------------- |
+| **Live Application** | [https://agnos-front-end-assignment.vercel.app](https://agnos-front-end-assignment.vercel.app) |
+| **Code Repository**  | [GitHub](https://github.com/ConfusezNy/-Agnos-front-end-assignment.git)                        |
+| **Patient Form**     | `/patient`                                                                                     |
+| **Staff Dashboard**  | `/staff`                                                                                       |
 
 ---
 
@@ -42,16 +42,16 @@ Patients type into the form → data is sent via WebSocket (debounced at 300ms) 
 
 ## 🛠 Tech Stack
 
-| Technology | Version | Purpose |
-|:---|:---|:---|
-| [Next.js](https://nextjs.org/) | 15.5 | React framework (App Router) |
-| [React](https://react.dev/) | 19 | UI library |
-| [TypeScript](https://www.typescriptlang.org/) | 5.x | Type safety |
-| [TailwindCSS](https://tailwindcss.com/) | 4.x | Utility-first CSS |
-| [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) | — | Real-time communication |
-| [@vercel/functions](https://vercel.com/docs/functions) | 2.x | Serverless WebSocket (production) |
-| [ws](https://github.com/websockets/ws) | — | WebSocket server (development) |
-| [Vercel](https://vercel.com/) | — | Cloud deployment |
+| Technology                                                              | Version | Purpose                           |
+| :---------------------------------------------------------------------- | :------ | :-------------------------------- |
+| [Next.js](https://nextjs.org/)                                          | 15.5    | React framework (App Router)      |
+| [React](https://react.dev/)                                             | 19      | UI library                        |
+| [TypeScript](https://www.typescriptlang.org/)                           | 5.x     | Type safety                       |
+| [TailwindCSS](https://tailwindcss.com/)                                 | 4.x     | Utility-first CSS                 |
+| [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) | —       | Real-time communication           |
+| [@vercel/functions](https://vercel.com/docs/functions)                  | 2.x     | Serverless WebSocket (production) |
+| [ws](https://github.com/websockets/ws)                                  | —       | WebSocket server (development)    |
+| [Vercel](https://vercel.com/)                                           | —       | Cloud deployment                  |
 
 ---
 
@@ -80,10 +80,12 @@ npm run dev
 ```
 
 This single command starts **both**:
+
 - Next.js dev server on `http://localhost:3000`
 - WebSocket dev server on `ws://localhost:3001` (auto-started via `instrumentation.ts`)
 
 Then open two browser windows:
+
 - **Patient Form**: [http://localhost:3000/patient](http://localhost:3000/patient)
 - **Staff Dashboard**: [http://localhost:3000/staff](http://localhost:3000/staff)
 
@@ -98,16 +100,17 @@ npm run start
 
 ### Available Scripts
 
-| Script | Description |
-|:---|:---|
-| `npm run dev` | Start development server (Next.js + WebSocket) |
-| `npm run build` | Create optimized production build |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
+| Script          | Description                                    |
+| :-------------- | :--------------------------------------------- |
+| `npm run dev`   | Start development server (Next.js + WebSocket) |
+| `npm run build` | Create optimized production build              |
+| `npm run start` | Start production server                        |
+| `npm run lint`  | Run ESLint                                     |
 
 ### Environment Variables
 
 No environment variables are required. The WebSocket URL is auto-detected:
+
 - **Local dev**: `ws://localhost:3001`
 - **Production**: `wss://<your-domain>/api/ws`
 
@@ -158,13 +161,13 @@ agnos-frontend/
 
 ### Key Architectural Decisions
 
-| Decision | Reasoning |
-|:---|:---|
-| **App Router** (not Pages Router) | Modern Next.js pattern; Server Components for pages, Client Components for interactive parts |
-| **Server Components for pages** | `patient/page.tsx` and `staff/page.tsx` are Server Components that export SEO metadata, wrapping Client Component children |
-| **Single `WebSocketHub` class** | DRY principle — both dev server and Vercel route share the same message handling logic |
-| **`instrumentation.ts`** for dev WS | Next.js runs this once on startup — perfect for launching the dev WebSocket server automatically |
-| **`sessionStorage` tab ID** | Prevents ghost sessions when users navigate back and forth within the same tab |
+| Decision                            | Reasoning                                                                                                                  |
+| :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------- |
+| **App Router** (not Pages Router)   | Modern Next.js pattern; Server Components for pages, Client Components for interactive parts                               |
+| **Server Components for pages**     | `patient/page.tsx` and `staff/page.tsx` are Server Components that export SEO metadata, wrapping Client Component children |
+| **Single `WebSocketHub` class**     | DRY principle — both dev server and Vercel route share the same message handling logic                                     |
+| **`instrumentation.ts`** for dev WS | Next.js runs this once on startup — perfect for launching the dev WebSocket server automatically                           |
+| **`sessionStorage` tab ID**         | Prevents ghost sessions when users navigate back and forth within the same tab                                             |
 
 ---
 
@@ -174,11 +177,11 @@ agnos-frontend/
 
 The UI adapts to three breakpoint ranges:
 
-| Viewport | Patient Form | Staff Dashboard |
-|:---|:---|:---|
-| **Mobile** (< 640px) | Single column layout, full-width fields | Single column card grid, stacked stats |
-| **Tablet** (640–1024px) | Two-column grid for fields | Two-column card grid |
-| **Desktop** (> 1024px) | Two-column grid, centered max-w-2xl | Three-column card grid, max-w-7xl |
+| Viewport                | Patient Form                            | Staff Dashboard                        |
+| :---------------------- | :-------------------------------------- | :------------------------------------- |
+| **Mobile** (< 640px)    | Single column layout, full-width fields | Single column card grid, stacked stats |
+| **Tablet** (640–1024px) | Two-column grid for fields              | Two-column card grid                   |
+| **Desktop** (> 1024px)  | Two-column grid, centered max-w-2xl     | Three-column card grid, max-w-7xl      |
 
 ### Design Principles
 
@@ -241,10 +244,10 @@ If the WebSocket connection drops, the client automatically reconnects with **ex
 
 ### Dual WebSocket Architecture
 
-| Environment | Transport | Code |
-|:---|:---|:---|
-| **Local Dev** (`next dev`) | `ws` package on port 3001 | `src/lib/dev-ws.ts` |
-| **Production** (Vercel) | `@vercel/functions` `experimental_upgradeWebSocket` | `src/app/api/ws/route.ts` |
+| Environment                | Transport                                           | Code                      |
+| :------------------------- | :-------------------------------------------------- | :------------------------ |
+| **Local Dev** (`next dev`) | `ws` package on port 3001                           | `src/lib/dev-ws.ts`       |
+| **Production** (Vercel)    | `@vercel/functions` `experimental_upgradeWebSocket` | `src/app/api/ws/route.ts` |
 
 Both use the **shared `WebSocketHub`** class (`src/lib/ws-handler.ts`) — zero duplicated logic.
 

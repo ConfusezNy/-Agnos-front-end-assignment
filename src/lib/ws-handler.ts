@@ -80,12 +80,14 @@ export class WebSocketHub {
         client.role === 'patient' &&
         client.tabId === tabId
       ) {
+        // Don't remove already-submitted sessions — keep them visible on staff dashboard
+        const existingSession = this.patientSessions.get(client.sessionId);
+        if (existingSession?.status === 'submitted') return;
+
         toRemove.push(id);
       }
     });
     for (const id of toRemove) {
-      // Silently remove old session (no need to broadcast disconnect first —
-      // the new register will immediately broadcast the fresh patient data)
       const old = this.clients.get(id);
       if (old) {
         this.patientSessions.delete(old.sessionId);
@@ -94,6 +96,7 @@ export class WebSocketHub {
       }
     }
   }
+
 
   /**
    * Prune stale connections whose sockets are no longer open.
@@ -189,10 +192,20 @@ export class WebSocketHub {
     if (!client) return;
 
     if (client.role === 'patient') {
-      this.patientSessions.delete(client.sessionId);
-      this.broadcastToStaff({ type: 'patient:disconnected', sessionId: client.sessionId });
+      const session = this.patientSessions.get(client.sessionId);
+
+      if (session && session.status === 'submitted') {
+        // Keep submitted sessions visible on staff dashboard — don't delete them
+        // Staff should still see submitted patient data after patient closes tab
+        // (session remains in patientSessions Map but client socket is removed)
+      } else {
+        // Non-submitted patients: remove session and notify staff
+        this.patientSessions.delete(client.sessionId);
+        this.broadcastToStaff({ type: 'patient:disconnected', sessionId: client.sessionId });
+      }
     }
 
     this.clients.delete(clientId);
   }
 }
+

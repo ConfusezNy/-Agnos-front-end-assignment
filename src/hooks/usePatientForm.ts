@@ -119,15 +119,15 @@ export function usePatientForm(): UsePatientFormReturn {
         return updated;
       });
 
-      // Mark field as touched (skip update if already touched to avoid re-render)
+      // Mark field as touched — always update to ensure React batches
+      // touched=true and error together in the same render cycle
       setTouchedFields((prev) => {
-        if (prev.has(field)) return prev;
         const next = new Set(prev);
         next.add(field);
         return next;
       });
 
-      // Validate the field
+      // Validate the field (validate against raw value; validateField handles trimming internally)
       const error = validateField(field, value);
       setErrors((prev) => {
         const next = { ...prev };
@@ -138,6 +138,7 @@ export function usePatientForm(): UsePatientFormReturn {
         }
         return next;
       });
+
 
       // Reset inactivity timer
       resetInactivityTimer();

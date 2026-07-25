@@ -18,6 +18,7 @@ interface FormFieldProps {
   onBlur?: (field: keyof PatientFormData) => void;
   disabled?: boolean;
   maxLength?: number;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
 }
 
 const fieldMaxLengths: Partial<Record<keyof PatientFormData, number>> = {
@@ -47,6 +48,7 @@ export default memo(function FormField({
   onBlur,
   disabled = false,
   maxLength,
+  inputMode,
 }: FormFieldProps) {
   const showError = touched && error;
   const limit = maxLength || fieldMaxLengths[name];
@@ -122,6 +124,7 @@ export default memo(function FormField({
           onBlur={() => onBlur?.(name)}
           placeholder={placeholder}
           maxLength={limit}
+          inputMode={inputMode}
           className={baseInputClasses}
           disabled={disabled}
           aria-invalid={showError ? 'true' : undefined}

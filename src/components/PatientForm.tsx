@@ -112,7 +112,7 @@ export default function PatientForm() {
               </legend>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <FormField name="phoneNumber" label="Phone number" type="tel" required placeholder="0812345678" hint="e.g. 0812345678 or +66812345678" value={formData.phoneNumber} error={errors.phoneNumber} touched={touchedFields.has('phoneNumber')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
-                <FormField name="email" label="Email" type="email" required placeholder="john@example.com" value={formData.email} error={errors.email} touched={touchedFields.has('email')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
+                <FormField name="email" label="Email" type="text" required placeholder="john@example.com" value={formData.email} error={errors.email} touched={touchedFields.has('email')} onChange={handleFieldChange} onBlur={handleFieldBlur} inputMode="email" />
                 <div className="sm:col-span-2">
                   <FormField name="address" label="Address" type="textarea" required placeholder="123 Main Street, City, Country" value={formData.address} error={errors.address} touched={touchedFields.has('address')} onChange={handleFieldChange} onBlur={handleFieldBlur} />
                 </div>

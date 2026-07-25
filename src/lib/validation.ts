@@ -14,6 +14,7 @@ export function validateField(
 ): string {
   switch (name) {
     case 'firstName': {
+      if (value !== value.trim()) return 'Remove leading or trailing spaces';
       const v = value.trim();
       if (!v) return 'First name is required';
       if (v.length < 2) return 'Must be at least 2 characters';
@@ -23,6 +24,7 @@ export function validateField(
     }
 
     case 'lastName': {
+      if (value !== value.trim()) return 'Remove leading or trailing spaces';
       const v = value.trim();
       if (!v) return 'Last name is required';
       if (v.length < 2) return 'Must be at least 2 characters';
@@ -32,6 +34,7 @@ export function validateField(
     }
 
     case 'middleName': {
+      if (value !== value.trim()) return 'Remove leading or trailing spaces';
       const v = value.trim();
       if (!v) return ''; // optional
       if (v.length > 50) return 'Must be 50 characters or fewer';
@@ -57,6 +60,7 @@ export function validateField(
       return '';
 
     case 'phoneNumber': {
+      if (value !== value.trim()) return 'Remove leading or trailing spaces';
       const v = value.trim();
       if (!v) return 'Phone number is required';
       if (!PHONE_PATTERN.test(v)) return 'Enter a valid phone number (e.g. 0812345678)';
@@ -64,6 +68,7 @@ export function validateField(
     }
 
     case 'email': {
+      if (value !== value.trim()) return 'Remove leading or trailing spaces';
       const v = value.trim();
       if (!v) return 'Email is required';
       if (v.length > 254) return 'Email is too long';
